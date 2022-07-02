@@ -1,24 +1,23 @@
 <!doctype html>
 <html>
-
 <head>
-  <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-  <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
     integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
   <link rel= "stylesheet" href ="/public/main.css">
   <title>Hello, world!</title>
 </head>
-
 <body>
-  
 <%- include('nav.html') %> 
 
 <div class="container">
   <h4 class="ml-2 my-3 mt-4" >할일 리스트</h4><br />
+  <div class="container input-group mb-2">
+    <input class="form-control">
+    <button class="input-group-append btn btn-danger">검색</button>
+  </div>
+  
   <ul class="list-group">
     <% for (var i = 0; i < posts.length; i++){ %>
     <li class="list-group-item">
@@ -26,15 +25,15 @@
       <h4> 할일 제목 : <%= posts[i].제목 %> </h4>
       <p> 할일 마감날짜 : <%= posts[i].날짜 %> </p>
       <button type="button" class="btn btn-secondary delete " data-id="<%= posts[i]._id %>">delete</button>
+      <button type="button" class="btn btn-secondary edit "  data-id="<%= posts[i]._id %>">수정하기</button>
+      <button type="button" class="btn btn-secondary detail " data-id="<%= posts[i]._id %>">detail</button>
     </li>
     <% } %>
   </ul>
 </div>
-  <!-- ajax하면 새로고침없이 서버에 요청하는걸 도와주는 Js문법 -->
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script>
   $('.delete').click(function(e){
-
     var 글번호 = e.target.dataset.id
     var 지금누른거 = $(this);
     $.ajax({
@@ -44,6 +43,21 @@
     }).done(function(결과){//AJAX 성공시 실행할 코드는 여기
       console.log("성공")
       지금누른거.parent('li').fadeOut()//부모태그 찾아줘서 사라지게 해주셈
+    }).fail(function(xhr,textSta){
+      console.log("실패")
+    })
+  });
+
+  $('.edit').click(function(e){
+    var 글번호 = e.target.dataset.id
+    var 지금누른거 = $(this);
+    $.ajax({
+      method : 'EDIT',
+      url : '/edit',
+      data : { _id : 글번호}
+    }).done(function(결과){//AJAX 성공시 실행할 코드는 여기
+      console.log("성공")
+      document.location.href='/list:'+지금누른거
     }).fail(function(xhr,textSta){
       console.log("실패")
     })

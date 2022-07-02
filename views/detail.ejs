@@ -19,13 +19,13 @@
  <%- include('nav.html') %> 
   
  
-<div class="container mt-4">
-  <h4 class="text-center"">상세페이지 </h4>
+ <div class="container mt-4">
+  <h4 class="text-center">상세페이지 </h4>
   <div class="card" style="width: 18rem;">
     <div class="card-body">
-      <h5 class="card-title"><%= posts[1].제목 %></h5>
-      <h6 class="card-subtitle mb-2 text-muted"><%= posts[1].날짜 %></h6>
-      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+      <h5 class="card-title"> <%= data.제목 %></h5>
+      <h6 class="card-subtitle mb-2 text-muted">: <%= data.날짜 %></h6>
+      <p class="card-text">상세페이지임.</p>
       <a href="#" class="card-link">수정하기</a>
     </div>
   </div>
